@@ -31,12 +31,24 @@ namespace DayOne
                     {
                         var secondExpenses = expenses[j];
 
-                        if (firstExpense + secondExpenses == 2020)
+                        for (int k = j+1; k < expenses.Count; k++)
                         {
-                            Console.WriteLine($"The first expense is {firstExpense} and the second one is {secondExpenses}.");
-                            Console.WriteLine($"Their product is {firstExpense * secondExpenses}");
-                            return;
+                            var thirdExpense = expenses[k];
+
+                            if (firstExpense + secondExpenses + thirdExpense == 2020)
+                            {
+                                Console.WriteLine($"The first expense is {firstExpense}, the second one is {secondExpenses} and the third one {thirdExpense}.");
+                                Console.WriteLine($"Their product is {firstExpense * secondExpenses * thirdExpense}");
+                                return;
+                            }
                         }
+
+                        //if (firstExpense + secondExpenses == 2020)
+                        //{
+                        //    Console.WriteLine($"The first expense is {firstExpense} and the second one is {secondExpenses}.");
+                        //    Console.WriteLine($"Their product is {firstExpense * secondExpenses}");
+                        //    return;
+                        //}
                     }
                 }
             }
