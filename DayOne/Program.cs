@@ -11,7 +11,7 @@ namespace DayOne
         {
             Console.WriteLine("Advent of Code Day One!");
 
-            var path = $"Resources/input.txt";
+            var path = @"Resources/input.txt";
 
             try
             {
