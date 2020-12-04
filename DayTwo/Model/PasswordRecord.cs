@@ -27,5 +27,10 @@ namespace DayTwo.Model
             var keyCount = Password.Count(c => c == Policy.Key);
             return keyCount >= Policy.MinKeyCount && keyCount <= Policy.MaxKeyCount;
         }
+
+        public bool IsValidTwo()
+        {
+            return Password[Policy.MinKeyCount - 1] == Policy.Key ^ Password[Policy.MaxKeyCount - 1] == Policy.Key;
+        }
     }
 }

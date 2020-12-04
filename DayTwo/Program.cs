@@ -21,13 +21,16 @@ namespace DayTwo
                 if (lines.Length == 0) throw new Exception($"File is empty.");
 
                 int validPasswordCount = 0;
+                int validPasswordCountTwo = 0;
                 foreach (var line in lines)
                 {
                     var passwordRecord = new PasswordRecord(line);
                     if (passwordRecord.IsValid()) validPasswordCount++;
+                    if (passwordRecord.IsValidTwo()) validPasswordCountTwo++;
                 }
 
                 Console.WriteLine(validPasswordCount);
+                Console.WriteLine(validPasswordCountTwo);
             }
             catch (Exception ex)
             {
