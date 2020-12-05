@@ -30,6 +30,17 @@ namespace DayFive
                 }
 
                 Console.WriteLine($"The highest seat ID is {BoardingPasses.Max(b => b.Id)}.");
+
+                var OrderedBoardingPasseIds = BoardingPasses.Select(b => b.Id).OrderBy(i => i).ToArray();
+
+                for (int i = 1; i < OrderedBoardingPasseIds.Length; i++)
+                {
+                    if (OrderedBoardingPasseIds[i] != OrderedBoardingPasseIds[i-1]+1)
+                    {
+                        Console.WriteLine($"The ID of my seat is {OrderedBoardingPasseIds[i] - 1}.");
+                        break;
+                    }
+                }
             }
             catch (Exception ex)
             {
