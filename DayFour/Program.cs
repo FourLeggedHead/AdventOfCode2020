@@ -10,7 +10,7 @@ namespace DayFour
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Advent of Code 2020 - Day Three");
+            Console.WriteLine("Advent of Code 2020 - Day Four");
 
             var path = @"Resources/input.txt";
 
