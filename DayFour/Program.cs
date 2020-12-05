@@ -36,7 +36,12 @@ namespace DayFour
                     }
                 }
 
-                Console.WriteLine($"The count of valid passports is {Passports.Count(p=>p.IsValid())}.");
+                Console.WriteLine($"The count of valid (simple) passports is {Passports.Count(p=>p.IsValidSimple())}.");
+                Console.WriteLine($"The count of valid (complex) passports is {Passports.Count(p => p.IsValidComplex())}.");
+
+                var validPassports = Passports.Where(p => p.IsValidComplex()).Select(p => p.ToString());
+
+                File.WriteAllLines(@"Resources/output.txt", validPassports);
             }
             catch (Exception ex)
             {
