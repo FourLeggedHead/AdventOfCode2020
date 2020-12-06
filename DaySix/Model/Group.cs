@@ -14,16 +14,30 @@ namespace DaySix.Model
             PersonsAnswers = new List<char[]>();
         }
 
-        public List<char> ListUniqueYesses()
+        public List<char> ListUniqueAnyoneYesses()
         {
-            var UniqueYesses = new List<char>();
+            List<char> anyoneYesses = null;
 
             foreach (var person in PersonsAnswers)
             {
-                UniqueYesses = UniqueYesses.Union(person.ToList()).ToList();
+                if (anyoneYesses == null) anyoneYesses = person.ToList();
+                else anyoneYesses = anyoneYesses.Union(person.ToList()).ToList();
             }
 
-            return UniqueYesses;
+            return anyoneYesses;
+        }
+
+        public List<char> ListUniqueEveryoneYesses()
+        {
+            List<char> everyYesses = null;
+
+            foreach (var person in PersonsAnswers)
+            {
+                if (everyYesses == null) everyYesses = person.ToList();
+                else everyYesses = everyYesses.Intersect(person.ToList()).ToList();
+            }
+
+            return everyYesses;
         }
     }
 }

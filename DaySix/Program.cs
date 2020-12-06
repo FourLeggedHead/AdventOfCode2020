@@ -36,7 +36,8 @@ namespace DaySix
                     }
                 }
 
-                Console.WriteLine($"The sum of the yesses counts is {PassengerGroups.Select(g => g.ListUniqueYesses().Count).Sum()}");
+                Console.WriteLine($"The sum of anyone yesses counts is {PassengerGroups.Select(g => g.ListUniqueAnyoneYesses().Count).Sum()}");
+                Console.WriteLine($"The sum of everyone yesses counts is {PassengerGroups.Select(g => g.ListUniqueEveryoneYesses().Count).Sum()}");
             }
             catch (Exception ex)
             {
