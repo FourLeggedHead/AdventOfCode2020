@@ -7,23 +7,34 @@ namespace DaySeven.Model
     public class Rule
     {
         public string Color { get; set; }
-        public List<string> Colors { get; set; }
+        public List<int> BagCounts { get; set; }
+        public List<string> BagColors { get; set; }
 
         public Rule(string rule)
         {
-            var ruleMatch = Regex.Match(rule, @"(?<OuterBag>[a-z\s]+) bags contain((\s?\d+\s(?<InnerBags>[a-z]+\s[a-z]+) bags?(,\s)?)+)?.");
+            var ruleMatch = Regex.Match(rule, @"(?<OuterBag>[a-z\s]+) bags contain((\s?(?<BagCounts>\d+)\s(?<BagColors>[a-z]+\s[a-z]+) bags?(,\s)?)+)?.");
 
             if (ruleMatch.Success)
             {
                 Color = ruleMatch.Groups["OuterBag"].Value;
 
-                if (ruleMatch.Groups.ContainsKey("InnerBags"))
+                if (ruleMatch.Groups.ContainsKey("BagColors"))
                 {
-                    Colors = new List<string>();
+                    BagColors = new List<string>();
 
-                    foreach (Capture capture in ruleMatch.Groups["InnerBags"].Captures)
+                    foreach (Capture capture in ruleMatch.Groups["BagColors"].Captures)
                     {
-                        Colors.Add(capture.Value);
+                        BagColors.Add(capture.Value);
+                    }
+                }
+
+                if (ruleMatch.Groups.ContainsKey("BagCounts"))
+                {
+                    BagCounts = new List<int>();
+
+                    foreach (Capture capture in ruleMatch.Groups["BagCounts"].Captures)
+                    {
+                        BagCounts.Add(int.Parse(capture.Value));
                     }
                 }
             }

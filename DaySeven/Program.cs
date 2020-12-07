@@ -34,6 +34,8 @@ namespace DaySeven
                 }
 
                 Console.WriteLine(shinyRules.Select(r => r.Color).Distinct().Count());
+
+                Console.WriteLine(CountBagsIn(ListOfRules, ListOfRules.Find(r => r.Color == "shiny gold")) - 1);
             }
             catch (Exception ex)
             {
@@ -50,11 +52,11 @@ namespace DaySeven
             {
                 var rule = queue.Dequeue();
 
-                if (rule.Colors.Contains("shiny gold")) return true;
+                if (rule.BagColors.Contains("shiny gold")) return true;
 
-                if (rule.Colors != null && rule.Colors.Count != 0)
+                if (rule.BagColors != null && rule.BagColors.Count != 0)
                 {
-                    foreach (var color in rule.Colors)
+                    foreach (var color in rule.BagColors)
                     {
                         var nextRule = listOfRules.Find(r => r.Color == color);
                         if (nextRule != null) queue.Enqueue(nextRule);
@@ -63,6 +65,23 @@ namespace DaySeven
             }
 
             return false;
+        }
+
+        private static int CountBagsIn(List<Rule> listOfRules, Rule originRule)
+        {
+            var bagCount = 1;
+
+            if (originRule.BagCounts == null) return bagCount;
+            else
+            {
+                for (int i = 0; i < originRule.BagColors.Count; i++)
+                {
+                    var nextRule = listOfRules.Find(r => r.Color == originRule.BagColors[i]);
+                    if (nextRule != null) bagCount += originRule.BagCounts[i] * CountBagsIn(listOfRules, nextRule);
+                }
+
+                return bagCount;
+            }
         }
     }
 }
