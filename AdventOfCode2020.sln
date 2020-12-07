@@ -5,15 +5,23 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayOne", "DayOne\DayOne.csproj", "{4C74C7C5-B47C-4AAD-9126-1C96F27D8D8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayTwo", "DayTwo\DayTwo.csproj", "{49C1B33E-8AA0-4C69-9785-1A55498E9F97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayTwo", "DayTwo\DayTwo.csproj", "{49C1B33E-8AA0-4C69-9785-1A55498E9F97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayThree", "DayThree\DayThree.csproj", "{A39C3DD3-89D6-4C13-BB2B-BD9994BC796F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayThree", "DayThree\DayThree.csproj", "{A39C3DD3-89D6-4C13-BB2B-BD9994BC796F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayFour", "DayFour\DayFour.csproj", "{3FBAE172-C78E-4024-97C7-78D55010127A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayFour", "DayFour\DayFour.csproj", "{3FBAE172-C78E-4024-97C7-78D55010127A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayFive", "DayFive\DayFive.csproj", "{57C3497B-FED3-4A53-8016-59D7D105ABC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayFive", "DayFive\DayFive.csproj", "{57C3497B-FED3-4A53-8016-59D7D105ABC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaySix", "DaySix\DaySix.csproj", "{7FB36495-0598-48D7-A89B-95C7E710D0AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaySix", "DaySix\DaySix.csproj", "{7FB36495-0598-48D7-A89B-95C7E710D0AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaySeven", "DaySeven\DaySeven.csproj", "{30E84E72-52FD-4D01-8EBC-85292B48699D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{6CA355D5-F060-4CF0-96C2-1266C9569BCB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourLeggedHead.IO", "FourLeggedHead.IO\FourLeggedHead.IO.csproj", "{516E036A-7670-4B03-9078-53BE0685EA18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourLeggedHead.Tools", "FourLeggedHead.Tools\FourLeggedHead.Tools.csproj", "{153770FF-1455-44E8-860F-DECE13EE1802}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +53,25 @@ Global
 		{7FB36495-0598-48D7-A89B-95C7E710D0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FB36495-0598-48D7-A89B-95C7E710D0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FB36495-0598-48D7-A89B-95C7E710D0AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30E84E72-52FD-4D01-8EBC-85292B48699D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30E84E72-52FD-4D01-8EBC-85292B48699D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30E84E72-52FD-4D01-8EBC-85292B48699D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30E84E72-52FD-4D01-8EBC-85292B48699D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516E036A-7670-4B03-9078-53BE0685EA18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516E036A-7670-4B03-9078-53BE0685EA18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516E036A-7670-4B03-9078-53BE0685EA18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516E036A-7670-4B03-9078-53BE0685EA18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{153770FF-1455-44E8-860F-DECE13EE1802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153770FF-1455-44E8-860F-DECE13EE1802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{153770FF-1455-44E8-860F-DECE13EE1802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{153770FF-1455-44E8-860F-DECE13EE1802}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{516E036A-7670-4B03-9078-53BE0685EA18} = {6CA355D5-F060-4CF0-96C2-1266C9569BCB}
+		{153770FF-1455-44E8-860F-DECE13EE1802} = {6CA355D5-F060-4CF0-96C2-1266C9569BCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4FD3B3E-BD1E-48CE-8BF5-FFE0434C7C71}
