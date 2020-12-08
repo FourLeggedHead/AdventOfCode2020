@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourLeggedHead.IO", "FourLe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourLeggedHead.Tools", "FourLeggedHead.Tools\FourLeggedHead.Tools.csproj", "{153770FF-1455-44E8-860F-DECE13EE1802}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayEight", "DayEight\DayEight.csproj", "{9AF27540-8493-4B2B-9196-6D4E7C91592A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{153770FF-1455-44E8-860F-DECE13EE1802}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{153770FF-1455-44E8-860F-DECE13EE1802}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{153770FF-1455-44E8-860F-DECE13EE1802}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AF27540-8493-4B2B-9196-6D4E7C91592A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AF27540-8493-4B2B-9196-6D4E7C91592A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AF27540-8493-4B2B-9196-6D4E7C91592A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AF27540-8493-4B2B-9196-6D4E7C91592A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
