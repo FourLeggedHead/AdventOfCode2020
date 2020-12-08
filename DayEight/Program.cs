@@ -53,6 +53,66 @@ namespace DayEight
 
                     instruction.RunCount++;
                 }
+                
+                Console.WriteLine(accumulator);
+
+                
+                var complete = false;
+
+                while (!complete)
+                {
+                    foreach (var instruction in bootCode)
+                    {
+                        instruction.RunCount = 0;
+                    }
+
+                    var id = bootCode.FindIndex(i => (i.Operation == Operation.Jump || i.Operation == Operation.NoOperation) && !i.Changed);
+                    if (id >= 0)
+                    {
+                        bootCode[id].Changed = true;
+                        bootCode[id].SwapNopJump();
+                    }
+                    else break;
+
+                    run = true;
+                    position = 0;
+                    accumulator = 0;
+
+                    while (run)
+                    {
+                        var instruction = bootCode[position];
+
+                        if (instruction.RunCount > 0) break; //run = false;
+
+                        switch (instruction.Operation)
+                        {
+                            case Operation.NoOperation:
+                                position++;
+                                break;
+                            case Operation.Jump:
+                                position += instruction.Argument;
+                                break;
+                            case Operation.Accumulate:
+                                position++;
+                                accumulator += instruction.Argument;
+                                break;
+                            default:
+                                break;
+                        }
+
+                        instruction.RunCount++;
+
+                        if (position >= bootCode.Count)
+                        {
+                            complete = true;
+                            break;
+                        }
+                    }
+
+                    bootCode[id].SwapNopJump();
+
+                    Console.WriteLine(id + " " + complete + " " + accumulator);
+                }
 
                 Console.WriteLine(accumulator);
             }

@@ -16,6 +16,7 @@ namespace DayEight.Model
         public Operation Operation { get; set; }
         public int Argument { get; set; }
         public int RunCount { get; set; }
+        public bool Changed { get; set; }
 
         public Instruction(string instruction)
         {
@@ -32,6 +33,16 @@ namespace DayEight.Model
 
                 Argument = int.Parse(instructionMatch.Groups["Argument"].Value);
             }
+
+            Changed = false;
+        }
+
+        public void SwapNopJump()
+        {
+            if (Operation == Operation.Jump) Operation = Operation.NoOperation;
+            else if (Operation == Operation.NoOperation) Operation = Operation.Jump;
+
+            Changed = true;
         }
     }
 }
