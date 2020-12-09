@@ -22,9 +22,9 @@ namespace DayNine
 
                 var preambleLength = 25;
 
-                for (int i = 25; i < XmasNumbers.Count; i++)
+                for (int i = preambleLength; i < XmasNumbers.Count; i++)
                 {
-                    if(!XmasNumbers.Skip(i - preambleLength).Take(25).Subsets(2).Any(s => s.Sum() == XmasNumbers[i]))
+                    if(!XmasNumbers.Skip(i - preambleLength).Take(preambleLength).Subsets(2).Any(s => s.Sum() == XmasNumbers[i]))
                     {
                         Console.WriteLine(XmasNumbers[i]);
 
