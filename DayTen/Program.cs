@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DayTen.Model;
+using MoreLinq;
 
 namespace DayTen
 {
@@ -12,7 +13,7 @@ namespace DayTen
         {
             Console.WriteLine("Advent of Code 2020 - Day Ten");
 
-            var path = @"Resources/input.txt";
+            var path = @"Resources/TestInput.txt";
 
             try
             {
