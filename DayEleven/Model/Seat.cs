@@ -49,17 +49,17 @@ namespace DayEleven.Model
             return new Seat(X,Y,State);
         }
 
-        public IEnumerable<Seat> FindAdjacentSeats(List<Seat> seatingArea)
+        public IEnumerable<Seat> FindAdjacentSeats(Seat[,] seatingArea)
         {
-            var maxX = seatingArea.Max(s => s.X);
-            var maxY = seatingArea.Max(s => s.Y);
+            var maxX = seatingArea.GetLength(0);
+            var maxY = seatingArea.GetLength(1);
 
             for (int i = X - 1; i <= X + 1; i++)
             {
                 for (int j = Y - 1; j <= Y + 1; j++)
                 {
-                    if (i >= 0 && j >= 0 && i <= maxX && j <= maxY && !(j == Y && i == X))
-                        yield return seatingArea.Find(s => s.X == i && s.Y == j);
+                    if (i >= 0 && j >= 0 && i < maxX && j < maxY && !(j == Y && i == X))
+                        yield return seatingArea[i,j];
                 }
             }
         }

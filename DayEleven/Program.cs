@@ -19,19 +19,18 @@ namespace DayEleven
             {
                 var seatRows = FileReader.ReadAllLines(path);
 
-                //var maxX = seatRows.Count();
-                //var maxY = seatRows.ElementAt(0).Length;
+                var maxX = seatRows.Count();
+                var maxY = seatRows.ElementAt(0).Length;
 
-                //var seatingArea = new Seat[maxX, maxY];
+                var seatingArea = new Seat[maxX, maxY];
 
-                var seatingArea = new List<Seat>();
                 for (int i = 0; i < seatRows.Count(); i++)
                 {
                     var row = seatRows.ElementAt(i);
 
                     for (int j = 0; j < row.Length; j++)
                     {
-                        seatingArea.Add(new Seat(i, j, row[j]));
+                        seatingArea[i,j] = (new Seat(i, j, row[j]));
                     }
                 }
 
@@ -41,40 +40,42 @@ namespace DayEleven
                 {
                     changes = 0;
 
-                    var changedSeatingArea = new List<Seat>();
+                    var changedSeatingArea = new Seat[maxX, maxY];
 
-                    foreach (var seat in seatingArea)
+                    for (int i = 0; i < maxX; i++)
                     {
-                        var changedSeat = seat.Copy();
-
-                        var adjacentSeats = seat.FindAdjacentSeats(seatingArea);
-
-                        if (seat.State == State.Empty && adjacentSeats != null &&
-                                adjacentSeats.All(s => s.State == State.Empty || s.State == State.Floor))
+                        for (int j = 0; j < maxY; j++)
                         {
-                            changedSeat.State = State.Occupied;
-                            changes++;
-                        }
+                            var seat = seatingArea[i, j];
+                            var changedSeat = seat.Copy();
 
-                        if (seat.State == State.Occupied && adjacentSeats != null &&
-                            adjacentSeats.Count(s => s.State == State.Occupied) >= 4)
-                        {
-                            changedSeat.State = State.Empty;
-                            changes++;
-                        }
+                            var adjacentSeats = seat.FindAdjacentSeats(seatingArea);
 
-                        changedSeatingArea.Add(changedSeat);
+                            if (seat.State == State.Empty && adjacentSeats != null &&
+                                    adjacentSeats.All(s => s.State == State.Empty || s.State == State.Floor))
+                            {
+                                changedSeat.State = State.Occupied;
+                                changes++;
+                            }
+
+                            if (seat.State == State.Occupied && adjacentSeats != null &&
+                                adjacentSeats.Count(s => s.State == State.Occupied) >= 4)
+                            {
+                                changedSeat.State = State.Empty;
+                                changes++;
+                            }
+
+                            changedSeatingArea[i, j] = changedSeat;
+                        }
                     }
 
                     seatingArea = changedSeatingArea;
 
                     Console.WriteLine(changes);
-                    //PrintSeatingArea(seatingArea);
-                    //Console.WriteLine();
 
                 } while (changes > 0);
 
-                Console.WriteLine(seatingArea.Count(s => s.State == State.Occupied));
+                Console.WriteLine(seatingArea.Flatten().Count(s => ((Seat)s).State == State.Occupied));
 
                 //PrintSeatingArea(seatingArea);
             }
