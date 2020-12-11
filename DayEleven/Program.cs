@@ -49,7 +49,8 @@ namespace DayEleven
                             var seat = seatingArea[i, j];
                             var changedSeat = seat.Copy();
 
-                            var adjacentSeats = seat.FindAdjacentSeats(seatingArea);
+                            //var adjacentSeats = seat.FindAdjacentSeats(seatingArea);
+                            var adjacentSeats = seat.FindNearbySeats(seatingArea);
 
                             if (seat.State == State.Empty && adjacentSeats != null &&
                                     adjacentSeats.All(s => s.State == State.Empty || s.State == State.Floor))
@@ -59,7 +60,7 @@ namespace DayEleven
                             }
 
                             if (seat.State == State.Occupied && adjacentSeats != null &&
-                                adjacentSeats.Count(s => s.State == State.Occupied) >= 4)
+                                adjacentSeats.Count(s => s.State == State.Occupied) >= 5)
                             {
                                 changedSeat.State = State.Empty;
                                 changes++;

@@ -64,6 +64,120 @@ namespace DayEleven.Model
             }
         }
 
+        public IEnumerable<Seat> FindNearbySeats(Seat[,] seatingArea)
+        {
+            var maxX = seatingArea.GetLength(0);
+            var maxY = seatingArea.GetLength(1);
+
+            var nearbySeats = new List<Seat>();
+
+            var i = X + 1;
+            while (i < maxX)
+            {
+                if (seatingArea[i,Y].State != State.Floor)
+                {
+                    nearbySeats.Add(seatingArea[i, Y]);
+                    break;
+                }
+
+                i++;
+            }
+
+            i = X + 1;
+            var j = Y + 1;
+            while (i < maxX && j < maxY)
+            {
+                if (seatingArea[i, j].State != State.Floor)
+                {
+                    nearbySeats.Add(seatingArea[i, j]);
+                    break;
+                }
+
+                i++;
+                j++;
+            }
+
+            j = Y + 1;
+            while (j < maxY)
+            {
+                if (seatingArea[X, j].State != State.Floor)
+                {
+                    nearbySeats.Add(seatingArea[X, j]);
+                    break;
+                }
+
+                j++;
+            }
+
+            i = X - 1;
+            j = Y + 1;
+            while (i >= 0 && j < maxY)
+            {
+                if (seatingArea[i, j].State != State.Floor)
+                {
+                    nearbySeats.Add(seatingArea[i, j]);
+                    break;
+                }
+
+                i--;
+                j++;
+            }
+
+            i = X - 1;
+            while (i >= 0)
+            {
+                if (seatingArea[i, Y].State != State.Floor)
+                {
+                    nearbySeats.Add(seatingArea[i, Y]);
+                    break;
+                }
+
+                i--;
+            }
+
+            i = X - 1;
+            j = Y - 1;
+            while (i >= 0 && j >= 0)
+            {
+                if (seatingArea[i, j].State != State.Floor)
+                {
+                    nearbySeats.Add(seatingArea[i, j]);
+                    break;
+                }
+
+                i--;
+                j--;
+            }
+
+            j = Y - 1;
+            while (j >= 0)
+            {
+                if (seatingArea[X, j].State != State.Floor)
+                {
+                    nearbySeats.Add(seatingArea[X, j]);
+                    break;
+                }
+
+                j--;
+            }
+
+            i = X + 1;
+            j = Y - 1;
+            while (i < maxX && j >= 0)
+            {
+                if (seatingArea[i, j].State != State.Floor)
+                {
+                    nearbySeats.Add(seatingArea[i, j]);
+                    break;
+                }
+
+                i++;
+                j--;
+            }
+
+            return nearbySeats;
+        }
+
         public override string ToString()
         {
             return $"X: {X} Y: {Y} State: {State}";
