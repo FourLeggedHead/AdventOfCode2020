@@ -49,21 +49,6 @@ namespace DayEleven.Model
             return new Seat(X,Y,State);
         }
 
-        public void SwitchState()
-        {
-            switch (State)
-            {
-                case State.Empty:
-                    State = State.Occupied;
-                    break;
-                case State.Occupied:
-                    State = State.Empty;
-                    break;
-                default:
-                    break;
-            }
-        }
-
         public IEnumerable<Seat> FindAdjacentSeats(List<Seat> seatingArea)
         {
             var maxX = seatingArea.Max(s => s.X);
@@ -73,10 +58,15 @@ namespace DayEleven.Model
             {
                 for (int j = Y - 1; j <= Y + 1; j++)
                 {
-                    if (i >= 0 && j >= 0 && i < maxX && j < maxY && !(j == Y && i == X))
-                        yield return seatingArea.Find(s => s.State != State.Floor && s.X == i && s.Y == j);
+                    if (i >= 0 && j >= 0 && i <= maxX && j <= maxY && !(j == Y && i == X))
+                        yield return seatingArea.Find(s => s.X == i && s.Y == j);
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return $"X: {X} Y: {Y} State: {State}";
         }
     }
 }
