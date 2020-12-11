@@ -13,7 +13,7 @@ namespace DayTen
         {
             Console.WriteLine("Advent of Code 2020 - Day Ten");
 
-            var path = @"Resources/TestInput.txt";
+            var path = @"Resources/Input.txt";
 
             try
             {
