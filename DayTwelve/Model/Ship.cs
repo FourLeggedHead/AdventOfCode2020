@@ -14,8 +14,8 @@ namespace DayTwelve.Model
 
     public class Ship
     {
-        public int Latitude { get; set; }
-        public int Longitude { get; set; }
+        public long Latitude { get; set; }
+        public long Longitude { get; set; }
         public Orientation Orientation { get; set; }
 
         public Ship()
@@ -76,7 +76,20 @@ namespace DayTwelve.Model
             }
         }
 
-        public int ManhattanDistance() => Math.Abs(Latitude) + Math.Abs(Longitude);
+        public void MoveTowardWaypoint(ref Waypoint waypoint, Instruction instruction)
+        {
+            if (instruction.Direction == Direction.Forward)
+            {
+                Latitude += instruction.Value * waypoint.Latitude;
+                Longitude += instruction.Value * waypoint.Longitude;
+            }
+            else
+            {
+                waypoint.Move(instruction);
+            }
+        }
+
+        public long ManhattanDistance() => Math.Abs(Latitude) + Math.Abs(Longitude);
 
         public override string ToString()
         {

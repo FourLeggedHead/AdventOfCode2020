@@ -21,15 +21,20 @@ namespace DayTwelve
                 var instrunctions = new List<Instruction>(instructionsInput.Select(i => new Instruction(i)));
 
                 var ship = new Ship();
-                Console.WriteLine(ship);
-                Console.WriteLine();
 
                 for (int i = 0; i < instrunctions.Count; i++)
                 {
-                    Console.WriteLine(instrunctions[i]);
                     ship.Move(instrunctions[i]);
-                    Console.WriteLine(ship.ToString());
-                    Console.WriteLine();
+                }
+
+                Console.WriteLine(ship.ManhattanDistance());
+
+                ship = new Ship();
+                var waypoint = new Waypoint();
+
+                for (int i = 0; i < instrunctions.Count; i++)
+                {
+                    ship.MoveTowardWaypoint(ref waypoint, instrunctions[i]);
                 }
 
                 Console.WriteLine(ship.ManhattanDistance());
