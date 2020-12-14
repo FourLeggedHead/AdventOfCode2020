@@ -9,6 +9,8 @@ namespace FourLeggedHead.Tools
     {
         static long inv(long a, long m)
         {
+            // Returns modulo inverse of a with respect to m using extended 
+            // Euclid Algorithm.
             long m0 = m, t, q;
             long x0 = 0, x1 = 1;
 
