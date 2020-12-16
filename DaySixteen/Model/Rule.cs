@@ -11,7 +11,7 @@ namespace DaySixteen.Model
         public int FirstEnd { get; set; }
         public int SecondStart { get; set; }
         public int SecondEnd { get; set; }
-        public int Position { get; set; }
+        public List<int> Positions { get; set; }
 
         public Rule(string rule)
         {
@@ -25,6 +25,8 @@ namespace DaySixteen.Model
                 SecondStart = int.Parse(match.Groups["SS"].Value);
                 SecondEnd = int.Parse(match.Groups["SE"].Value);
             }
+
+            Positions = new List<int>();
         }
 
         public bool Validate(int value)
@@ -35,7 +37,7 @@ namespace DaySixteen.Model
 
         public override string ToString()
         {
-            return $"Name: {Name}; Position: {Position}";
+            return $"Name: {Name}; Position: {Positions.Count}";
         }
     }
 }

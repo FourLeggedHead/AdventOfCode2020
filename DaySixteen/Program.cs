@@ -72,17 +72,28 @@ namespace DaySixteen
                 {
                     var valuesAtPosition = nearbyTickets.Select(t => t[p]);
 
-                    foreach (var rule in rules.Where(r => r.Position == 0))
+                    foreach (var rule in rules)
                     {
                         if (valuesAtPosition.Select(v => rule.Validate(v)).All(b => b == true))
                         {
-                            rule.Position = p + 1;
-                            break;
+                            rule.Positions.Add(p + 1);
                         }
                     }
                 }
 
-                var indexes = rules.Where(r => r.Name.StartsWith("departure")).Select(r => r.Position);
+                while (rules.Any(r => r.Positions.Count > 1))
+                {
+                    foreach (var rule in rules.Where(r => r.Positions.Count == 1))
+                    {
+                        var position = rule.Positions[0];
+                        foreach (var rul in rules.Where(r => r != rule))
+                        {
+                            if (rul.Positions.Contains(position)) rul.Positions.Remove(position);
+                        }
+                    }
+                }
+
+                var indexes = rules.Where(r => r.Name.StartsWith("departure")).Select(r => r.Positions[0]);
 
                 long multiply = 1;
                 foreach (var index in indexes)
