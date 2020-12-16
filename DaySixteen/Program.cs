@@ -45,17 +45,52 @@ namespace DaySixteen
                 }
 
                 var scanningRate = 0;
+                var invalidTickets = new List<List<int>>();
                 foreach (var ticket in nearbyTickets)
                 {
+                    var valid = true;
+
                     foreach (var number in ticket)
                     {
                         if (rules.Any(r => r.Validate(number)))
                             continue;
                         scanningRate += number;
+                        valid = false;
                     }
+
+                    if (!valid) invalidTickets.Add(ticket);
                 }
 
                 Console.WriteLine(scanningRate);
+
+                foreach (var ticket in invalidTickets)
+                {
+                    nearbyTickets.Remove(ticket);
+                }
+
+                for (int p = 0; p < rules.Count; p++)
+                {
+                    var valuesAtPosition = nearbyTickets.Select(t => t[p]);
+
+                    foreach (var rule in rules.Where(r => r.Position == 0))
+                    {
+                        if (valuesAtPosition.Select(v => rule.Validate(v)).All(b => b == true))
+                        {
+                            rule.Position = p + 1;
+                            break;
+                        }
+                    }
+                }
+
+                var indexes = rules.Where(r => r.Name.StartsWith("departure")).Select(r => r.Position);
+
+                long multiply = 1;
+                foreach (var index in indexes)
+                {
+                    multiply *= myTicket[index - 1];
+                }
+
+                Console.WriteLine(multiply);
             }
             catch (Exception ex)
             {

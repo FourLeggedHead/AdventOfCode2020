@@ -11,6 +11,7 @@ namespace DaySixteen.Model
         public int FirstEnd { get; set; }
         public int SecondStart { get; set; }
         public int SecondEnd { get; set; }
+        public int Position { get; set; }
 
         public Rule(string rule)
         {
@@ -30,6 +31,11 @@ namespace DaySixteen.Model
         {
             return (value >= FirstStart && value <= FirstEnd)
                 || (value >= SecondStart && value <= SecondEnd);
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}; Position: {Position}";
         }
     }
 }
