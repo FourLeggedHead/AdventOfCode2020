@@ -16,7 +16,6 @@ namespace DaySeventeen
                 var input = FileReader.ReadAllLines(@"Resources/input.txt");
 
                 var pocket = new Dictionary<long, Cube>();
-
                 for (int i = 0; i < input.Count(); i++)
                 {
                     for (int j = 0; j < input.ElementAt(i).Length; j++)
@@ -44,19 +43,10 @@ namespace DaySeventeen
                     var updatedPocket = new Dictionary<long, Cube>();
                     foreach (var cube in pocket.Union(missingCubes))
                     {
-                        updatedPocket.Add(cube.Key, new Cube(cube.Value));
+                        updatedPocket.Add(cube.Key, cube.Value.UpdateState(pocket));
                     }
 
-                    foreach (var cube in updatedPocket)
-                    {
-                        cube.Value.UpdateState(pocket);
-                    }
-
-                    pocket.Clear();
-                    foreach (var cube in updatedPocket)
-                    {
-                        pocket.Add(cube.Key, cube.Value);
-                    }
+                    pocket = updatedPocket;
                 }
 
                 //Print(pocket);

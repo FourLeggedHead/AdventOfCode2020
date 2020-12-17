@@ -28,13 +28,8 @@ namespace DaySeventeen.Model
             State = state;
         }
 
-        public Cube(int x, int y, int z, int w, char state)
+        public Cube(int x, int y, int z, int w, char state) : this(x, y, z, w, CubeState.Inactive)
         {
-            X = x;
-            Y = y;
-            Z = z;
-            W = w;
-
             switch (state)
             {
                 case '.':
@@ -48,14 +43,7 @@ namespace DaySeventeen.Model
             }
         }
 
-        public Cube(Cube cube)
-        {
-            X = cube.X;
-            Y = cube.Y;
-            Z = cube.Z;
-            W = cube.W;
-            State = cube.State;
-        }
+        public Cube(Cube cube) : this(cube.X, cube.Y, cube.Z, cube.W, cube.State) { }
 
         public long CustomHash(int x, int y, int z, int w)
         {
@@ -84,7 +72,7 @@ namespace DaySeventeen.Model
                             {
                                 if (space.TryGetValue(CustomHash(x, y, z, w), out Cube cube))
                                     neighbors.Add(cube);
-                            } 
+                            }
                         }
                     }
                 }
@@ -108,7 +96,7 @@ namespace DaySeventeen.Model
                             for (int w = W - 1; w <= W + 1; w++)
                             {
                                 if (!space.TryGetValue(CustomHash(x, y, z, w), out Cube cube))
-                                    neighbors.Add(CustomHash(x, y, z, w), new Cube(x, y, z, w, CubeState.Inactive)); 
+                                    neighbors.Add(CustomHash(x, y, z, w), new Cube(x, y, z, w, CubeState.Inactive));
                             }
                         }
                     }
@@ -118,15 +106,19 @@ namespace DaySeventeen.Model
             return neighbors;
         }
 
-        public void UpdateState(Dictionary<long, Cube> space)
+        public Cube UpdateState(Dictionary<long, Cube> space)
         {
+            var updatedCube = new Cube(this);
+
             var activeNeighborsCount = FindExistingNeighbors(space).Count(c => c.State == CubeState.Active);
 
             if (State == CubeState.Active && activeNeighborsCount != 2 && activeNeighborsCount != 3)
-                State = CubeState.Inactive;
+                updatedCube.State = CubeState.Inactive;
 
             if (State == CubeState.Inactive && activeNeighborsCount == 3)
-                State = CubeState.Active;
+                updatedCube.State = CubeState.Active;
+
+            return updatedCube;
         }
 
         public override string ToString()
