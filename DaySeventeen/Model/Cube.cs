@@ -16,21 +16,24 @@ namespace DaySeventeen.Model
         public int X { get; set; }
         public int Y { get; set; }
         public int Z { get; set; }
+        public int W { get; set; }
         public CubeState State { get; set; }
 
-        public Cube(int x, int y, int z, CubeState state)
+        public Cube(int x, int y, int z, int w, CubeState state)
         {
             X = x;
             Y = y;
             Z = z;
+            W = w;
             State = state;
         }
 
-        public Cube(int x, int y, int z, char state)
+        public Cube(int x, int y, int z, int w, char state)
         {
             X = x;
             Y = y;
             Z = z;
+            W = w;
 
             switch (state)
             {
@@ -50,25 +53,22 @@ namespace DaySeventeen.Model
             X = cube.X;
             Y = cube.Y;
             Z = cube.Z;
+            W = cube.W;
             State = cube.State;
         }
 
-        public override int GetHashCode()
-        {
-            return CustomHash(X, Y, Z);
-        }
-
-        public int CustomHash(int x, int y, int z)
+        public long CustomHash(int x, int y, int z, int w)
         {
             var seed = 10009;
             var factor = 9176;
             var hash = seed * factor + x.GetHashCode();
             hash = hash * factor + y.GetHashCode();
             hash = hash * factor + z.GetHashCode();
+            hash = hash * factor + w.GetHashCode();
             return hash;
         }
 
-        public List<Cube> FindExistingNeighbors(Dictionary<int, Cube> space)
+        public List<Cube> FindExistingNeighbors(Dictionary<long, Cube> space)
         {
             var neighbors = new List<Cube>();
 
@@ -78,10 +78,13 @@ namespace DaySeventeen.Model
                 {
                     for (int z = Z - 1; z <= Z + 1; z++)
                     {
-                        if (!(x == X && y == Y && z == Z))
+                        for (int w = W - 1; w <= W + 1; w++)
                         {
-                            if (space.TryGetValue(CustomHash(x, y, z), out Cube cube))
-                                neighbors.Add(cube);
+                            if (!(x == X && y == Y && z == Z && w == W))
+                            {
+                                if (space.TryGetValue(CustomHash(x, y, z, w), out Cube cube))
+                                    neighbors.Add(cube);
+                            } 
                         }
                     }
                 }
@@ -90,9 +93,9 @@ namespace DaySeventeen.Model
             return neighbors;
         }
 
-        public Dictionary<int, Cube> FindMissingNeighbors(Dictionary<int, Cube> space)
+        public Dictionary<long, Cube> FindMissingNeighbors(Dictionary<long, Cube> space)
         {
-            var neighbors = new Dictionary<int, Cube>();
+            var neighbors = new Dictionary<long, Cube>();
 
             for (int x = X - 1; x <= X + 1; x++)
             {
@@ -102,8 +105,11 @@ namespace DaySeventeen.Model
                     {
                         if (!(x == X && y == Y && z == Z))
                         {
-                            if (!space.TryGetValue(CustomHash(x, y, z), out Cube cube))
-                                neighbors.Add(CustomHash(x, y, z), new Cube(x, y, z, CubeState.Inactive));
+                            for (int w = W - 1; w <= W + 1; w++)
+                            {
+                                if (!space.TryGetValue(CustomHash(x, y, z, w), out Cube cube))
+                                    neighbors.Add(CustomHash(x, y, z, w), new Cube(x, y, z, w, CubeState.Inactive)); 
+                            }
                         }
                     }
                 }
@@ -112,7 +118,7 @@ namespace DaySeventeen.Model
             return neighbors;
         }
 
-        public void UpdateState(Dictionary<int, Cube> space)
+        public void UpdateState(Dictionary<long, Cube> space)
         {
             var activeNeighborsCount = FindExistingNeighbors(space).Count(c => c.State == CubeState.Active);
 
@@ -125,7 +131,7 @@ namespace DaySeventeen.Model
 
         public override string ToString()
         {
-            return $"({X}, {Y}, {Z} - {State})";
+            return $"({X}, {Y}, {Z}, {W} - {State})";
         }
     }
 }
