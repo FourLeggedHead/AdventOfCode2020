@@ -45,12 +45,20 @@ namespace DaySeventeen.Model
             }
         }
 
+        public Cube(Cube cube)
+        {
+            X = cube.X;
+            Y = cube.Y;
+            Z = cube.Z;
+            State = cube.State;
+        }
+
         public override int GetHashCode()
         {
             return CustomHash(X, Y, Z);
         }
 
-        int CustomHash(int x, int y, int z)
+        public int CustomHash(int x, int y, int z)
         {
             var seed = 10009;
             var factor = 9176;
@@ -66,9 +74,9 @@ namespace DaySeventeen.Model
 
             for (int x = X - 1; x <= X + 1; x++)
             {
-                for (int y = Y - 1; y <= Y + 1; x++)
+                for (int y = Y - 1; y <= Y + 1; y++)
                 {
-                    for (int z = Z - 1; z <= Z + 1; x++)
+                    for (int z = Z - 1; z <= Z + 1; z++)
                     {
                         if (!(x == X && y == Y && z == Z))
                         {
@@ -88,9 +96,9 @@ namespace DaySeventeen.Model
 
             for (int x = X - 1; x <= X + 1; x++)
             {
-                for (int y = Y - 1; y <= Y + 1; x++)
+                for (int y = Y - 1; y <= Y + 1; y++)
                 {
-                    for (int z = Z - 1; z <= Z + 1; x++)
+                    for (int z = Z - 1; z <= Z + 1; z++)
                     {
                         if (!(x == X && y == Y && z == Z))
                         {
@@ -113,6 +121,11 @@ namespace DaySeventeen.Model
 
             if (State == CubeState.Inactive && activeNeighborsCount == 3)
                 State = CubeState.Active;
+        }
+
+        public override string ToString()
+        {
+            return $"({X}, {Y}, {Z} - {State})";
         }
     }
 }

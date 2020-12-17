@@ -14,7 +14,7 @@
     <None Update="Resources\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\TestInput.txt">
+    <None Update="Resources\InputTest.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
