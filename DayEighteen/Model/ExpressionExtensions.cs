@@ -74,9 +74,9 @@ namespace DayEighteen.Model
             var tokens = expression.Replace(" ", null).ToCharArray();
             var operators = new Stack<char>();
 
-            void EvaluateUntil(char stop)
+            void EvaluateUntil(string stoppers)
             {
-                while (operators.Count > 0 && operators.Peek() != '(')
+                while (operators.Count > 0 && !stoppers.Contains(operators.Peek()))
                 {
                     var op = operators.Pop();
                     if (op == '+')
@@ -90,15 +90,19 @@ namespace DayEighteen.Model
             {
                 switch (token)
                 {
-                    case char t when t == '+' || t == '*':
-                        EvaluateUntil('(');
-                        operators.Push(t);
+                    case '+':
+                        EvaluateUntil("(*");
+                        operators.Push(token);
+                        break;
+                    case '*':
+                        EvaluateUntil("(");
+                        operators.Push(token);
                         break;
                     case '(':
                         operators.Push(token);
                         break;
                     case ')':
-                        EvaluateUntil('(');
+                        EvaluateUntil("(");
                         operators.Pop();
                         break;
                     default:
@@ -107,7 +111,7 @@ namespace DayEighteen.Model
                 }
             }
 
-            EvaluateUntil('(');
+            EvaluateUntil("(");
 
             return output.Pop();
         }
