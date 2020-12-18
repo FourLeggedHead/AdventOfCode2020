@@ -31,17 +31,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayTen", "DayTen\DayTen.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayEleven", "DayEleven\DayEleven.csproj", "{C3FA0BC7-2A94-4E6B-B734-27D2A7307249}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayTwelve", "DayTwelve\DayTwelve.csproj", "{A3B4E615-BC1D-4023-8760-F81A811CD585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayTwelve", "DayTwelve\DayTwelve.csproj", "{A3B4E615-BC1D-4023-8760-F81A811CD585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayThirteen", "DayThirteen\DayThirteen.csproj", "{340F0022-A81B-497F-AD73-F36E04FECF24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayThirteen", "DayThirteen\DayThirteen.csproj", "{340F0022-A81B-497F-AD73-F36E04FECF24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayFourteen", "DayFourteen\DayFourteen.csproj", "{41CA8A93-8F50-4F7E-9F92-D5C1288BC2E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayFourteen", "DayFourteen\DayFourteen.csproj", "{41CA8A93-8F50-4F7E-9F92-D5C1288BC2E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayFifteen", "DayFifteen\DayFifteen.csproj", "{11DEEBDB-1D82-44E2-B970-C08AB51730F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayFifteen", "DayFifteen\DayFifteen.csproj", "{11DEEBDB-1D82-44E2-B970-C08AB51730F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaySixteen", "DaySixteen\DaySixteen.csproj", "{D5381B54-C097-410C-B74C-05F183733FAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaySixteen", "DaySixteen\DaySixteen.csproj", "{D5381B54-C097-410C-B74C-05F183733FAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaySeventeen", "DaySeventeen\DaySeventeen.csproj", "{FDFD32EB-2A12-4C1F-87EB-17C06A011B72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaySeventeen", "DaySeventeen\DaySeventeen.csproj", "{FDFD32EB-2A12-4C1F-87EB-17C06A011B72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayEighteen", "DayEighteen\DayEighteen.csproj", "{577612C9-B4F5-4F80-9678-B69871E3FBE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +127,10 @@ Global
 		{FDFD32EB-2A12-4C1F-87EB-17C06A011B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDFD32EB-2A12-4C1F-87EB-17C06A011B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDFD32EB-2A12-4C1F-87EB-17C06A011B72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{577612C9-B4F5-4F80-9678-B69871E3FBE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{577612C9-B4F5-4F80-9678-B69871E3FBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{577612C9-B4F5-4F80-9678-B69871E3FBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{577612C9-B4F5-4F80-9678-B69871E3FBE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
