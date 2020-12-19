@@ -10,7 +10,6 @@ namespace DayNineteen.Model
         public int Id { get; set; }
         public string Expression { get; set; }
         public List<int> Children { get; set; }
-        public List<int> Parents{ get; set; }
 
         public Rule(string rule)
         {
@@ -32,13 +31,6 @@ namespace DayNineteen.Model
             return expression.Split(' ').ToList()
                 .Where(e => e != "|").Select(i => int.Parse(i))
                 .Distinct().OrderBy(i => i).ToList();
-        }
-
-        public void ListParents(Dictionary<int,Rule> rules)
-        {
-            Parents = rules
-                .Where(r => r.Value.Children.Count > 0 && r.Value.Children.Contains(Id))
-                .Select(r => r.Key).ToList();
         }
 
         public List<string> ListValidMessages(Dictionary<int, Rule> rules)

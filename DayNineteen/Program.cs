@@ -16,17 +16,10 @@ namespace DayNineteen
                 var input = FileReader.ReadAllLines(@"Resources/input.txt");
 
                 var rules = input.TakeWhile(i => i != "").Select(r => new Rule(r)).ToDictionary(r => r.Id);
-                foreach (var rule in rules)
-                {
-                    rule.Value.ListParents(rules);
-                }
 
-                var unparentedRules = rules.Where(r => r.Value.Parents.Count == 0).ToList();
-
-                var validMessages = unparentedRules[0].Value.ListValidMessages(rules);
+                var validMessages = rules[0].ListValidMessages(rules);
 
                 var messages = input.Skip(rules.Count + 1).ToList();
-
                 Console.WriteLine(messages.Count(m => validMessages.Contains(m)));
             }
             catch (Exception ex)
