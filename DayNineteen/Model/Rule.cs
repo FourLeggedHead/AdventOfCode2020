@@ -10,6 +10,7 @@ namespace DayNineteen.Model
         public int Id { get; set; }
         public string Expression { get; set; }
         public List<int> Children { get; set; }
+        public bool AffectedByChange { get; set; }
 
         public Rule(string rule)
         {
@@ -22,6 +23,8 @@ namespace DayNineteen.Model
             Expression = matchRule.Groups["Expression"].Value;
 
             Children = ListUniqueChildren(Expression);
+
+            AffectedByChange = false;
         }
 
         List<int> ListUniqueChildren(string expression)
@@ -77,6 +80,41 @@ namespace DayNineteen.Model
             }
 
             return messages;
+        }
+
+        public bool HasChild(Dictionary<int, Rule> rules, int ruleId)
+        {
+            if (!rules.ContainsKey(ruleId)) return false;
+
+            var visited = new HashSet<int>();
+
+            var queue = new Queue<int>();
+            queue.Enqueue(Id);
+
+            while (queue.Any())
+            {
+                var id = queue.Dequeue();
+
+                if (visited.Contains(id)) continue;
+
+                visited.Add(id);
+                
+                if (id == ruleId) return true;
+
+                var children = rules[id].Children;
+                if (children.Count > 0)
+                {
+                    foreach (var child in children)
+                    {
+                        if (!visited.Contains(child))
+                        {
+                            queue.Enqueue(child);
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
