@@ -2,7 +2,10 @@
 using FourLeggedHead.IO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+
 namespace DayNineteen
 {
     class Program
@@ -16,7 +19,6 @@ namespace DayNineteen
                 var input = FileReader.ReadAllLines(@"Resources/input.txt");
 
                 var rules = input.TakeWhile(i => i != "").Select(r => new Rule(r)).ToDictionary(r => r.Id);
-
                 var validMessages = rules[0].ListValidMessages(rules);
 
                 var affectedRules = rules.Values.Where(r => r.HasChild(rules, 8) || r.HasChild(rules, 11));
@@ -25,54 +27,40 @@ namespace DayNineteen
                 var validatedMessage = messages.Where(m => validMessages.Contains(m)).ToList();
                 Console.WriteLine(validatedMessage.Count());
 
-                var truc = new List<List<string>>();
-                var machin = affectedRules.Where(r => r.Id != 0);
-                var bidule = machin.Select(r => r.Children).SelectMany(i => i).Distinct();
-                foreach (var id in bidule)
-                {
-                    truc.Add(rules[id].ListValidMessages(rules));
-                }
+                var invalidatedMessaged = messages.Where(m => !validatedMessage.Contains(m)).ToList();
+                Console.WriteLine(invalidatedMessaged.Count());
 
-                var length = truc[0][0].Length;
+				// Adgvaedjrfhgæoiwetbjpw
 
-                var uncheckedMessaged = messages.Where(m => !validatedMessage.Contains(m)).ToList();
+                var rulesDictionary = new Dictionary<string, string>(rules
+					.Select(r => new KeyValuePair<string, string>(r.Key.ToString(), r.Value.Expression)));
+				
+				var processed = new Dictionary<string, string>();
 
-                Console.WriteLine(uncheckedMessaged.Count());
-                var count = validatedMessage.Count();
-                var counter = 0;
-                foreach (var message in uncheckedMessaged)
-                {
-                    Console.WriteLine(counter + ": " + message);
-                    if (message.Length % length != 0) continue;
+				string BuildRegex(string input)
+				{
+					if (processed.TryGetValue(input, out var s))
+						return s;
 
-                    var index = message.Length / length - 1;
+					var orig = rulesDictionary[input];
+					if (orig.StartsWith('\"'))
+						return processed[input] = orig.Replace("\"", "");
 
-                    // Start twice with 42
-                    if (!(truc[0].Contains(message.Substring(0, length)) && truc[0].Contains(message.Substring(length, length)))) continue;
+					if (!orig.Contains("|"))
+						return processed[input] = string.Join("", orig.Split().Select(BuildRegex));
 
-                    // Finished by 31
-                    if (!truc[1].Contains(message.Substring(index * length, length))) continue;
-                    index--;
+					return processed[input] =
+						"(" +
+						string.Join("", orig.Split().Select(x => x == "|" ? x : BuildRegex(x))) +
+						")";
+				}
 
-                    var isValid = true;
-                    while (index > 1)
-                    {
-                        if (!truc[1].Contains(message.Substring(index * length, length)))
-                        {
-                            if (!truc[0].Contains(message.Substring(index * length, length))) continue;
-                        }
-                        index--;
-                    }
+				var regex = new Regex("^" + BuildRegex("0") + "$");
+				Console.WriteLine(messages.Count(regex.IsMatch).ToString());
 
-                    if (isValid)
-                    {
-                        count++;
-                        Console.WriteLine("Valid : " + message);
-                    }
-                }
-
-                Console.WriteLine(count);
-            }
+				regex = new Regex($@"^({BuildRegex("42")})+(?<open>{BuildRegex("42")})+(?<close-open>{BuildRegex("31")})+(?(open)(?!))$");
+				Console.WriteLine(messages.Count(regex.IsMatch).ToString());
+			}
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
