@@ -25,6 +25,21 @@ namespace DayTwenty
                 var puzzle = new Puzzle(tiles.Values);
 
                 puzzle.Solve();
+                puzzle.Print();
+
+                var topLeftCorner = puzzle.GetTopLeftCorner();
+                var topRightCorner = puzzle.GetTopRightCorner();
+                var bottomLeftCorner = puzzle.GetBottomLeftCorner();
+                var bottomRightCorner = puzzle.GetBottomRightCorner();
+
+                long output = (long)bottomLeftCorner.Id * (long)bottomRightCorner.Id
+                    * (long)topLeftCorner.Id * (long)topRightCorner.Id;
+
+                Console.WriteLine(output);
+
+                var image = new Image(puzzle);
+
+                image.FindMonsters();
             }
             catch (Exception ex)
             {

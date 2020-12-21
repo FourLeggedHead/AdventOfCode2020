@@ -37,13 +37,13 @@ namespace DayTwenty.Model
             Id = int.Parse(matchTitle.Groups["Id"].Value);
 
             Pixels = new byte[TILE_DIMENSION, TILE_DIMENSION];
-            for (int i = 0; i < TILE_DIMENSION; i++)
+            for (int j = 0; j < TILE_DIMENSION; j++)
             {
-                var line = tile[i + 1].ToCharArray();
+                var line = tile[j + 1].ToCharArray();
 
-                for (int j = 0; j < TILE_DIMENSION; j++)
+                for (int i = 0; i < TILE_DIMENSION; i++)
                 {
-                    if (line[j] == '#') Pixels[i, j] = 1;
+                    if (line[i] == '#') Pixels[i, j] = 1;
                     else Pixels[i, j] = 0;
                 }
             }
@@ -68,28 +68,28 @@ namespace DayTwenty.Model
             var builder = new StringBuilder();
             for (int i = 0; i < TILE_DIMENSION; i++)
             {
-                builder.Append(Pixels[0, i].ToString());
+                builder.Append(Pixels[i, 0].ToString());
             }
             Edges[Side.Top] = builder.ToString();
 
             builder = new StringBuilder();
             for (int i = 0; i < TILE_DIMENSION; i++)
             {
-                builder.Append(Pixels[TILE_DIMENSION - 1, i].ToString());
+                builder.Append(Pixels[i, TILE_DIMENSION - 1].ToString());
             }
             Edges[Side.Bottom] = builder.ToString();
 
             builder = new StringBuilder();
             for (int i = 0; i < TILE_DIMENSION; i++)
             {
-                builder.Append(Pixels[i, 0].ToString());
+                builder.Append(Pixels[0, i].ToString());
             }
             Edges[Side.Left] = builder.ToString();
 
             builder = new StringBuilder();
             for (int i = 0; i < TILE_DIMENSION; i++)
             {
-                builder.Append(Pixels[i, TILE_DIMENSION - 1].ToString());
+                builder.Append(Pixels[TILE_DIMENSION - 1, i].ToString());
             }
             Edges[Side.Right] = builder.ToString();
         }
