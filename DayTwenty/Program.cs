@@ -11,7 +11,7 @@ namespace DayTwenty
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Advent of Code 2020 - Day Nineteen");
+            Console.WriteLine("Advent of Code 2020 - Day Twenty");
 
             try
             {
