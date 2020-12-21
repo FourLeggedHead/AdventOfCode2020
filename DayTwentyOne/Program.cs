@@ -56,6 +56,7 @@ namespace DayTwentyOne
                         }
                     }
                 }
+                allergensDictionary = allergensDictionary.OrderBy(a => a.Key).ToDictionary(a => a.Key, a => a.Value);
 
                 // Remove known ingredients from the list of ingredients count
                 foreach (var allergen in allergensDictionary)
@@ -64,6 +65,8 @@ namespace DayTwentyOne
                 }
 
                 Console.WriteLine(ingredientsCounts.Sum(i => i.Value));
+
+                Console.WriteLine(string.Join(',', allergensDictionary.Select(a => a.Value)));
             }
             catch (Exception ex)
             {
