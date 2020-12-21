@@ -95,7 +95,7 @@ namespace DayTwenty.Model
 
             foreach (var tile in Tiles)
             {
-                queue = new Queue<Tile>(Tiles.Where(t => t.Id != tile.Id).Where(t => !t.IsAttachedTo(tile))); //|| !t.IsAttachedTo(tile)));
+                queue = new Queue<Tile>(Tiles.Where(t => t.Id != tile.Id).Where(t => !t.IsAttachedTo(tile)));
 
                 var visited = new HashSet<Tile>();
 
@@ -103,36 +103,23 @@ namespace DayTwenty.Model
                 {
                     var secondTile = queue.Dequeue();
 
-                    var isMatching = false;
+                    var edges = ListAllEdges(new Tile[] { tile, secondTile });
 
-                    foreach (var permutation in secondTile.Permutations)
+                    var matchedEdges = edges
+                    .Window(2)
+                    .Where(w => w.Select(t => t.Edge).Distinct().Count() == 1)
+                    .Where(w => w[0].Side == Matching(w[1].Side));
+
+                    if (matchedEdges.Any())
                     {
-                        var edges = ListAllEdges(new Tile[] { tile, permutation });
+                        if (matchedEdges.Count() != 1) throw new Exception("Houston, we have a problem!");
 
-                        var matchedEdges = edges
-                        .Window(2)
-                        .Where(w => w.Select(t => t.Edge).Distinct().Count() == 1)
-                        .Where(w => w[0].Side == Matching(w[1].Side));
+                        var match = matchedEdges.ElementAt(0);
 
-                        if (matchedEdges.Any())
-                        {
-                            if (matchedEdges.Count() != 1) throw new Exception("Houston, we have a problem!");
-
-                            var match = matchedEdges.ElementAt(0);
-
-                            tile.AttachTile(secondTile, match[0].Side);
-                            secondTile.AttachTile(tile, match[1].Side);
-
-                            secondTile.Pixels = permutation.Pixels;
-                            secondTile.Edges = permutation.Edges;
-
-                            isMatching = true;
-
-                            break;
-                        }
+                        tile.AttachTile(secondTile, match[0].Side);
+                        secondTile.AttachTile(tile, match[1].Side);
                     }
-
-                    if (!isMatching)
+                    else
                     {
                         queue.Enqueue(secondTile);
                         visited.Add(secondTile);
