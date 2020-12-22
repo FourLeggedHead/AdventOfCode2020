@@ -14,40 +14,23 @@ namespace DayTwentyTwo
 
             try
             {
-                var input = FileReader.ReadAllLines(@"Resources/input.txt").ToList();
+                var input = FileReader.ReadAllLines(@"Resources/inputtest.txt").ToList();
 
-                var dekcs = input.Segment(l => l.StartsWith("Player"))
-                    .Select(p => p.Where(l => !l.StartsWith("Player") && !string.IsNullOrWhiteSpace(l)));
+                var decks = input
+                    .Segment(l => l.StartsWith("Player"))
+                    .ToDictionary(s => s.ElementAt(0).Trim(':'),
+                                    s => new Queue<int>(s.Where(l => !l.StartsWith("Player") && !string.IsNullOrWhiteSpace(l))
+                                                        .Select(int.Parse)));
 
-                var hands = new List<Queue<int>>();
-                foreach (var deck in dekcs)
-                {
-                    hands.Add(new Queue<int>(deck.Select(int.Parse)));
-                }
+                var firstPlayer = decks.Keys.ElementAt(0);
+                var secondPlayer = decks.Keys.ElementAt(1);
 
-                while (hands.All(h => h.Count >0))
-                {
-                    var cardFirst = hands[0].Dequeue();
-                    var cardSecond = hands[1].Dequeue();
-
-                    if (cardFirst > cardSecond)
-                    {
-                        hands[0].Enqueue(cardFirst);
-                        hands[0].Enqueue(cardSecond);
-                    }
-                    else
-                    {
-                        hands[1].Enqueue(cardSecond);
-                        hands[1].Enqueue(cardFirst);
-                    }
-                }
-
-                var winingHand = hands.Where(h => h.Count != 0).ElementAt(0);
+                var winner = PlayingSimpleGame(decks);
 
                 var score = 0;
-                while (winingHand.Count > 0)
+                while (decks[winner].Count > 0)
                 {
-                    score += winingHand.Count * winingHand.Dequeue();
+                    score += decks[winner].Count * decks[winner].Dequeue();
                 }
 
                 Console.WriteLine(score);
@@ -57,6 +40,31 @@ namespace DayTwentyTwo
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
             }
+        }
+
+        static string PlayingSimpleGame( Dictionary<string, Queue<int>> decks)
+        {
+            var firstPlayer = decks.Keys.ElementAt(0);
+            var secondPlayer = decks.Keys.ElementAt(1);
+
+            while (decks.Values.All(d => d.Count > 0))
+            {
+                var cardFirst = decks[firstPlayer].Dequeue();
+                var cardSecond = decks[secondPlayer].Dequeue();
+
+                if (cardFirst > cardSecond)
+                {
+                    decks[firstPlayer].Enqueue(cardFirst);
+                    decks[firstPlayer].Enqueue(cardSecond);
+                }
+                else
+                {
+                    decks[secondPlayer].Enqueue(cardSecond);
+                    decks[secondPlayer].Enqueue(cardFirst);
+                }
+            }
+
+            return decks.Where(d => d.Value.Count != 0).Select(d => d.Key).ElementAt(0);
         }
     }
 }
