@@ -39,7 +39,6 @@ namespace DayTwentyFour
                     var newLayout = new Dictionary<(int X, int Y), Color>();
 
                     AddMissingWhiteTiles(floor);
-                    //Print(floor);
 
                     foreach (var tile in floor)
                     {
@@ -62,9 +61,9 @@ namespace DayTwentyFour
 
                     floor.Clear();
                     floor = newLayout;
-
-                    Console.WriteLine(floor.Count(t => t.Value == Color.Black));
                 }
+
+                Console.WriteLine(floor.Count(t => t.Value == Color.Black));
             }
             catch (Exception ex)
             {
@@ -158,35 +157,6 @@ namespace DayTwentyFour
                     }
                 }
             }
-        }
-
-        static void Print(Dictionary<(int X, int Y), Color> floor)
-        {
-
-            var minX = floor.Min(t => t.Key.X) + 1;
-            var maxX = floor.Max(t => t.Key.X) - 1;
-            var minY = floor.Min(t => t.Key.Y) + 1;
-            var maxY = floor.Max(t => t.Key.Y) - 1;
-
-            for (int y = minY; y <= maxY; y++)
-            {
-                var line = new StringBuilder();
-                for (int x = minX; x <= maxX; x++)
-                {
-                    if ((x + y) % 2 != 0)
-                    {
-                        line.Append(' ');
-                    }
-                    else
-                    {
-                        if (floor[(x, y)] == Color.Black) line.Append('#');
-                        else line.Append('.');
-                    }
-                }
-                Console.WriteLine(line.ToString());
-            }
-
-            Console.WriteLine();
         }
     }
 
