@@ -16,23 +16,55 @@ namespace DayTwentyFour
             {
                 var pathes = FileReader.ReadAllLines(@"Resources/input.txt").ToList();
 
-                var tiles = new Dictionary<(int X, int Y), Color>();
+                var floor = new Dictionary<(int X, int Y), Color>();
 
                 foreach (var path in pathes)
                 {
                     var position = FindPosition(path);
 
-                    if (tiles.ContainsKey(position))
+                    if (floor.ContainsKey(position))
                     {
-                        tiles[position] = tiles[position] == Color.Black ? Color.White : Color.Black;
+                        floor[position] = floor[position] == Color.Black ? Color.White : Color.Black;
                     }
                     else
                     {
-                        tiles.Add(position, Color.Black);
+                        floor.Add(position, Color.Black);
                     }
                 }
 
-                Console.WriteLine(tiles.Count(t => t.Value == Color.Black));
+                Console.WriteLine(floor.Count(t => t.Value == Color.Black));
+
+                for (int day = 0; day < 100; day++)
+                {
+                    var newLayout = new Dictionary<(int X, int Y), Color>();
+
+                    AddMissingWhiteTiles(floor);
+                    //Print(floor);
+
+                    foreach (var tile in floor)
+                    {
+                        var adjacentTiles = FindAdjacentTiles(tile.Key, floor);
+                        var blackTilesCount = adjacentTiles.Count(tile => tile.Value == Color.Black);
+
+                        var color = tile.Value;
+                        if (color == Color.Black && (blackTilesCount == 0 || blackTilesCount > 2))
+                        {
+                            color = Color.White;
+                        }
+
+                        if (color == Color.White && blackTilesCount == 2)
+                        {
+                            color = Color.Black;
+                        }
+
+                        newLayout.Add(tile.Key, color);
+                    }
+
+                    floor.Clear();
+                    floor = newLayout;
+
+                    Console.WriteLine(floor.Count(t => t.Value == Color.Black));
+                }
             }
             catch (Exception ex)
             {
@@ -63,25 +95,98 @@ namespace DayTwentyFour
             return position;
         }
 
-        static (int X, int Y) MoveToNextTile((int X, int Y) tile, string move)
+        static (int X, int Y) MoveToNextTile((int X, int Y) position, string move)
         {
             switch (move)
             {
                 case "e":
-                    return (tile.X + 2, tile.Y);
+                    return (position.X + 2, position.Y);
                 case "se":
-                    return (tile.X + 1, tile.Y + 1);
+                    return (position.X + 1, position.Y + 1);
                 case "sw":
-                    return (tile.X - 1, tile.Y + 1);
+                    return (position.X - 1, position.Y + 1);
                 case "w":
-                    return (tile.X - 2, tile.Y);
+                    return (position.X - 2, position.Y);
                 case "nw":
-                    return (tile.X - 1, tile.Y - 1);
+                    return (position.X - 1, position.Y - 1);
                 case "ne":
-                    return (tile.X + 1, tile.Y - 1);
+                    return (position.X + 1, position.Y - 1);
                 default:
-                    return tile;
+                    return position;
             }
+        }
+
+        static Dictionary<(int X, int Y), Color> FindAdjacentTiles((int X, int Y) position, Dictionary<(int X, int Y), Color> floor)
+        {
+            var adjacentTiles = new Dictionary<(int X, int Y), Color>();
+
+            var nePosition = (position.X + 1, position.Y - 1);
+            if (floor.ContainsKey(nePosition)) adjacentTiles.Add(nePosition, floor[nePosition]);
+
+            var ePosition = (position.X + 2, position.Y);
+            if (floor.ContainsKey(ePosition)) adjacentTiles.Add(ePosition, floor[ePosition]);
+
+            var sePosition = (position.X + 1, position.Y + 1);
+            if (floor.ContainsKey(sePosition)) adjacentTiles.Add(sePosition, floor[sePosition]);
+
+            var swPosition = (position.X - 1, position.Y + 1);
+            if (floor.ContainsKey(swPosition)) adjacentTiles.Add(swPosition, floor[swPosition]);
+
+            var wPosition = (position.X - 2, position.Y);
+            if (floor.ContainsKey(wPosition)) adjacentTiles.Add(wPosition, floor[wPosition]);
+
+            var nwPosition = (position.X - 1, position.Y - 1);
+            if (floor.ContainsKey(nwPosition)) adjacentTiles.Add(nwPosition, floor[nwPosition]);
+
+            return adjacentTiles;
+        }
+
+        static void AddMissingWhiteTiles(Dictionary<(int X, int Y), Color> floor)
+        {
+            var minX = floor.Min(t => t.Key.X) - 1;
+            var maxX = floor.Max(t => t.Key.X) + 1;
+            var minY = floor.Min(t => t.Key.Y) - 1;
+            var maxY = floor.Max(t => t.Key.Y) + 1;
+
+            for (int x = minX; x <= maxX; x++)
+            {
+                for (int y = minY; y <= maxY; y++)
+                {
+                    if ((x + y) % 2 == 0)
+                    {
+                        if (!floor.ContainsKey((x, y))) floor.Add((x, y), Color.White);
+                    }
+                }
+            }
+        }
+
+        static void Print(Dictionary<(int X, int Y), Color> floor)
+        {
+
+            var minX = floor.Min(t => t.Key.X) + 1;
+            var maxX = floor.Max(t => t.Key.X) - 1;
+            var minY = floor.Min(t => t.Key.Y) + 1;
+            var maxY = floor.Max(t => t.Key.Y) - 1;
+
+            for (int y = minY; y <= maxY; y++)
+            {
+                var line = new StringBuilder();
+                for (int x = minX; x <= maxX; x++)
+                {
+                    if ((x + y) % 2 != 0)
+                    {
+                        line.Append(' ');
+                    }
+                    else
+                    {
+                        if (floor[(x, y)] == Color.Black) line.Append('#');
+                        else line.Append('.');
+                    }
+                }
+                Console.WriteLine(line.ToString());
+            }
+
+            Console.WriteLine();
         }
     }
 
