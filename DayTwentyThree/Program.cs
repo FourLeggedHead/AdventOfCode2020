@@ -13,31 +13,39 @@ namespace DayTwentyThree
 
             try
             {
-                const int moveCounts = 100;
+                const int cupCount = 1000000;
+                const int moveCount = 10000000;
 
-                var input = "389125467";
-                //var input = "167248359";
+                //var input = "389125467";
+                var input = "167248359";
 
-                var circle = new List<int>(input.Select(c => int.Parse(c.ToString())));
-                                
-                //for (int i = 10; i < 1000000; i++)
-                //{
-                //    circle.Add(i);
-                //}
+                var circle = new LinkedList<int>(input.Select(c => (int )char.GetNumericValue(c)));
+
+                for (int i = 10; i <= cupCount; i++)
+                {
+                    circle.AddLast(i);
+                }
+
+                var cupLookupTable = new Dictionary<int, LinkedListNode<int>>();
+                var currentCupNode = circle.First;
+                do
+                {
+                    cupLookupTable[currentCupNode.Value] = currentCupNode;
+                    currentCupNode = currentCupNode.Next;
+                } while (currentCupNode != null);
 
                 var circleLength = circle.Count;
-                var currentCupIndex = 0;
+                currentCupNode = circle.First;
 
-                for (int move = 1; move <= moveCounts; move++)
+                for (int move = 1; move <= moveCount; move++)
                 {
-                    var currentCup = circle[currentCupIndex];
-
                     // Put cups aside
-                    var asideCups = new List<int>();
+                    var asideCups = new List<LinkedListNode<int>>();
+                    var cupNode = currentCupNode;
                     for (int i = 1; i <= 3; i++)
                     {
-                        var cup = circle[(currentCupIndex + i) % circleLength];
-                        asideCups.Add(cup);
+                        cupNode = cupNode.Next ?? circle.First;
+                        asideCups.Add(cupNode);
                     }
 
                     foreach (var cup in asideCups)
@@ -46,29 +54,43 @@ namespace DayTwentyThree
                     }
 
                     // Find destination
-                    var destinationCup = currentCup == 1 ? circle.Max() : currentCup - 1;
-                    while (asideCups.Contains(destinationCup))
+                    var destinationCup = currentCupNode.Value == 1 ? circle.Max() : currentCupNode.Value - 1;
+                    var asideCupNumbers = asideCups.Select(c => c.Value);
+                    while (asideCupNumbers.Contains(destinationCup))
                     {
                         destinationCup = destinationCup == 1 ? circle.Max() : destinationCup - 1;
                     }
 
+                    var destincationCupNode = cupLookupTable[destinationCup];
+
                     // Add back cups put aside
-                    circle.InsertRange(circle.IndexOf(destinationCup) + 1, asideCups);
+                    cupNode = destincationCupNode;
+                    foreach (var cup in asideCups)
+                    {
+                        circle.AddAfter(cupNode, cup);
+                        cupNode = cup;
+                    }
 
-                    currentCupIndex = (circle.IndexOf(currentCup) + 1) % circleLength;
+                    // Find next current cup
+                    currentCupNode = currentCupNode.Next ?? circle.First;
                 }
 
-                while (circle.First() != 1)
-                {
-                    var cup = circle.First();
-                    circle.Remove(cup);
-                    circle.Add(cup);
-                }
+                //while (circle.First() != 1)
+                //{
+                //    var cup = circle.First();
+                //    circle.Remove(cup);
+                //    circle.AddLast(cup);
+                //}
+                //circle.Remove(1);
+                //Console.WriteLine(string.Join(null, circle));
 
-                circle.Remove(1);
-                Console.WriteLine(string.Join(null, circle));
+                var oneNode = circle.Find(1);
+                var nextNode = oneNode.Next ?? circle.First;
+                var nextToSecondNode = nextNode.Next ?? circle.First;
 
-                
+                long output = (long)nextNode.Value * (long)nextToSecondNode.Value;
+
+                Console.WriteLine(output);
             }
             catch (Exception ex)
             {
