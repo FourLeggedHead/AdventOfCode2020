@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FourLeggedHead.IO\FourLeggedHead.IO.csproj" />
+    <ProjectReference Include="..\FourLeggedHead.Tools\FourLeggedHead.Tools.csproj" />
+  </ItemGroup>
+
+</Project>
